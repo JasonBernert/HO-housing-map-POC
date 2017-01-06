@@ -1,7 +1,7 @@
 // Set up map
 var map = L.map('map', {
 	scrollWheelZoom: false,
-	center: [45.5231, -122.6765],
+	center: [45.54, -122.67],
 	zoom: 11
 });
 
@@ -12,8 +12,8 @@ var baselayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/
 
 var topLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png');
 
-baselayer.addTo(map);
-topLayer.addTo(map);
+// baselayer.addTo(map);
+// topLayer.addTo(map);
 
 L.geoJson(neighborhoods).addTo(map);
 

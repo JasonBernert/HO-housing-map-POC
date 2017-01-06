@@ -96,7 +96,7 @@ textarea {
    ========================================================================== */
 
 :root {
-  
+
 }
 
 #map {
@@ -104,12 +104,17 @@ textarea {
   height: 500px;
 }
 
+.leaflet-container {
+  background: #fff;
+}
 
+p {
+  font-family: georgia;
+}
 
-
-
-
-
+.story span {
+  font-weight: bold;
+}
 
 
 
