@@ -12,14 +12,12 @@
           integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
           crossorigin="anonymous"></script>
 
-
-
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
         <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
         <script src="js/neighborhoods_new.geojson"></script>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css" integrity="sha256-Gxk756LCcjwUNjIrkNrXNqY1Q+EW/Tct/IuGRw6Q1Mo=" crossorigin="anonymous" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.js"></script>
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css" integrity="sha256-Gxk756LCcjwUNjIrkNrXNqY1Q+EW/Tct/IuGRw6Q1Mo=" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/js/foundation.js"></script> -->
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
@@ -30,21 +28,30 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div class="row">
-          <!-- <div class="button"></div> -->
-        <div>
 
-        <div class="row">
-          <div id="map"></div>
-        <div>
+        <h2>Pick A Portlander</h2>
 
-        <div class="row story">
-          <div class="column small-12 large-7 large-centered">
-            <h4>On average, a <span id="demographic">single mother household</span> in Portland <span>couldn't</span> afford a rental unit in the <span id="neighborhood">Monavilla</span> neighborhood.</h4>
-            <p>Something like <a href="http://www.nytimes.com/interactive/2015/05/03/upshot/the-best-and-worst-places-to-grow-up-how-your-area-compares.html" target="_blank">this</a> may be cool. On average, a single mother household in Portland could afford a rental unit in green without becoming cost burdened and spending more than 30% of her monthly income on rent, not including utilities. Those in red would not be considered affordable.</p>
-          </div>
+        <div class="buttons">
+          <div class="button">White</div>
+          <div class="button">Black</div>
+          <div class="button">Latino</div>
+          <div class="button">Native America</div>
+          <div class="button">Asian</div>
+          <div class="button">Senior</div>
+          <div class="button">Single Mother</div>
+          <div class="button">Foreign-Born</div>
         </div>
 
+        <h2>Where can they afford to rent?</h2>
+
+        <div id="map"></div>
+
+        <div class="story">
+          <!-- <div class="small-12 medium-7 medium-centered"> -->
+            <h3>On average, a <span id="demographic">single mother household</span> in Portland <span>couldn't</span> afford a rental unit in the <span id="neighborhood">Monavilla</span> neighborhood.</h3>
+            <p>Something like <a href="http://www.nytimes.com/interactive/2015/05/03/upshot/the-best-and-worst-places-to-grow-up-how-your-area-compares.html" target="_blank">this</a> may be cool. On average, a single mother household in Portland could afford a rental unit in green without becoming cost burdened and spending more than 30% of her monthly income on rent, not including utilities. Those in red would not be considered affordable.</p>
+          <!-- </div> -->
+        </div>
 
         <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')</script>

@@ -1,24 +1,48 @@
 // Set up map
-var map = L.map('map', {
+const map = L.map('map', {
 	scrollWheelZoom: false,
 	center: [45.54, -122.67],
 	zoom: 11
 });
 
-var baselayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
+const baselayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
   maxZoom: 18,
   attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attribution">CARTO</a>'
 });
 
-var topLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png');
+const topLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png');
 
-// baselayer.addTo(map);
+baselayer.addTo(map);
 // topLayer.addTo(map);
 
-L.geoJson(neighborhoods).addTo(map);
+// Color map based on what demographic was chosen. If yes ('y'), then the region is blue. Else, it's red.
+function getColor(d) {
+    return d === 'y' ? '#2c7bb6':
+					 d === 'n' ? '#d7191c'
+										 : '#fffff';
+}
 
+let demographic = 'White';
 
-// ROADS ON TOP
-    // var topPane = map._createPane('leaflet-top-pane', map.getPanes().mapPane);
-    // topPane.appendChild(topLayer.getContainer());
-    // topLayer.setZIndex(7);
+// Set styles for map
+function style(feature) {
+	// console.log(feature);
+    return {
+        fillColor: getColor(feature.properties.White),
+        weight: 1.5,
+        opacity: 1,
+        color: 'white',
+        fillOpacity: 0.7
+    };
+}
+
+L.geoJson(neighborhoods, {style: style}).addTo(map);
+
+// Grab all the buttons and add an event listener
+const buttons = document.querySelectorAll('.button');
+buttons.forEach(button => button.addEventListener('click', function(){
+	// this.classList.add('active');
+	demographic = this.innerText;
+	console.log(demographic);
+})
+);
