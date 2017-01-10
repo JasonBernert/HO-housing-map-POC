@@ -1,3 +1,7 @@
+// Alot of this code comes from the leaflet choropleth tutorial: http://leafletjs.com/examples/choropleth/ //
+
+let demographic = 'White';
+
 // Set up map
 const map = L.map('map', {
 	scrollWheelZoom: false,
@@ -5,54 +9,114 @@ const map = L.map('map', {
 	zoom: 11
 });
 
+// Zoom out a bit on mobile devices to get that whole map in there.
 if (window.innerWidth < 600){
 	map.setZoom(10);
 }
 
+// Simple and free to use basetiles thanks to CartoDB!
 const baselayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
-  maxZoom: 18,
-  attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attribution">CARTO</a>'
+	maxZoom: 18,
+	attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attribution">CARTO</a>'
 });
 
-const topLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png');
-
 baselayer.addTo(map);
+
+// It might be fun to implement a top layer of labels
+// const topLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png');
 // topLayer.addTo(map);
 
 // Color map based on what demographic was chosen. If yes ('y'), then the region is blue. Else, it's red.
 function getColor(d) {
-    return d === 'y' ? '#2c7bb6':
-					 d === 'n' ? '#d7191c'
-										 : '#fffff';
+	return d === 'y' ? '#2c7bb6':
+				 d === 'n' ? '#d7191c'
+				 : '#fffff';
 }
 
 // Set styles for map
 function style(feature) {
-    return {
-        fillColor: getColor(feature.properties.White),
-        weight: 1.5,
-        opacity: 1,
-        color: 'white',
-        fillOpacity: 0.7
-    };
+	return {
+		fillColor: getColor(feature.properties.White),
+		weight: 1.5,
+		opacity: 1,
+		color: 'white',
+		fillOpacity: 0.7
+	};
 }
 
-const geography = L.geoJson(neighborhoods, {style: style}).addTo(map);
+// When you hover over a neighborhood we'll give it some new styles and update the info div.
+function highlightFeature(e) {
+	var layer = e.target;
+	info.update(layer.feature.properties);
+
+	layer.setStyle({
+		weight: 3,
+		color: '#666'
+	});
+
+	if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+		layer.bringToFront();
+	}
+}
+
+// When you're not hovering over it, we'll reset.
+function resetHighlight(e) {
+	e.target.setStyle({
+		weight: 1.5,
+		color: '#fff'
+	});
+	info.update();
+}
+
+// Leaflet method to add controls
+var info = L.control();
+
+// create a div with a class "info"
+info.onAdd = function (map) {
+	this._div = L.DomUtil.create('div', 'info');
+	this.update();
+	return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+	// const affordable = props[demographic] === 'y' ? 'could' : 'couldn’t';
+
+	this._div.innerHTML =  (props ?
+		`<p>An average <b>${demographic}</b> Portlander <b>${props[demographic] === 'y' ? 'could' : 'couldn’t'}</b> afford a two-bedroom apartment in the <b>${props.Neighborhood}</b> neighborhood.</p>`
+		: 'Hover for more info');
+};
+
+info.addTo(map);
+
+function onEachFeature(feature, layer) {
+	layer.on({
+		mouseover: highlightFeature,
+		mouseout: resetHighlight
+	});
+}
+
+// Now that we have all our functions and styles set, take our geography, styles and functionality and make a map!
+const geojson = L.geoJson(neighborhoods, {
+	style: style,
+	onEachFeature: onEachFeature
+}).addTo(map);
+
+// Let's make out buttons work!
 const demographicText = document.querySelector('.demographic');
 
 // Grab all the buttons and add an event listener
 const buttons = document.querySelectorAll('.button');
+
 buttons.forEach(button => button.addEventListener('click', function(){
-	this.classList.add('active');
-
-	const demographic = this.innerText;
+	// Grab all text in the button that'll act as our input
+	demographic = this.innerText;
+	// Update the story text based on our demographic
 	demographicText.innerText = `a ${demographic} Portlander`;
-
-	geography.setStyle( function style(feature) {
-	    return {
-	        fillColor: getColor(feature.properties[demographic]),
-	    };
+	// Update the coloring on the map to the correct data
+	geojson.setStyle( function style(feature) {
+		return {
+			fillColor: getColor(feature.properties[demographic]),
+		};
 	});
-
-})
-);
+}));
