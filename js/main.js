@@ -22,11 +22,8 @@ function getColor(d) {
 										 : '#fffff';
 }
 
-let demographic = 'White';
-
 // Set styles for map
 function style(feature) {
-	// console.log(feature);
     return {
         fillColor: getColor(feature.properties.White),
         weight: 1.5,
@@ -36,13 +33,22 @@ function style(feature) {
     };
 }
 
-L.geoJson(neighborhoods, {style: style}).addTo(map);
+const geography = L.geoJson(neighborhoods, {style: style}).addTo(map);
+const demographicText = document.querySelector('.demographic');
 
 // Grab all the buttons and add an event listener
 const buttons = document.querySelectorAll('.button');
 buttons.forEach(button => button.addEventListener('click', function(){
-	// this.classList.add('active');
-	demographic = this.innerText;
-	console.log(demographic);
+	this.classList.add('active');
+
+	const demographic = this.innerText;
+	demographicText.innerText = `a ${demographic} Portlander`;
+
+	geography.setStyle( function style(feature) {
+	    return {
+	        fillColor: getColor(feature.properties[demographic]),
+	    };
+	});
+
 })
 );
