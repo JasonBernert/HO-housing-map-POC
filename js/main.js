@@ -5,6 +5,10 @@ const map = L.map('map', {
 	zoom: 11
 });
 
+if (window.innerWidth < 600){
+	map.setZoom(10);
+}
+
 const baselayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png', {
   maxZoom: 18,
   attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="https://carto.com/attribution">CARTO</a>'
