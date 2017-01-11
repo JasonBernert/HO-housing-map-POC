@@ -124,7 +124,7 @@ h1, h2, h3 {
 
 .button {
   width: 100px;
-  height: 100px;
+  height: 60px;
   border: 2px solid #313233;
   order: 1;
   margin: 20px;
@@ -132,14 +132,27 @@ h1, h2, h3 {
   font-size: 0.875em;
   color: #313233;
   text-align: center;
+  padding-top: 40px;
+}
+
+.button.active {
+  border: 2px solid #f1f2f3;
+  background-color: #313233;
+  color: #f1f2f3;
+}
+
+.button:hover {
+  border: 2px solid #f1f2f3;
+  background-color: #313233;
+  color: #f1f2f3;
 }
 
 .info {
-  width: 160px;
-  min-height: 160px;
+  width: 180px;
+  /*min-height: 160px;*/
   padding: 0 1em;
   background: white;
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.95);
   border: 1px solid #e1e2e3;
   font-size: 1.25em;
   color: #313233;
